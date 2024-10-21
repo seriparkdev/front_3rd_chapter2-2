@@ -60,5 +60,19 @@ export const updateCartItemQuantity = (
   productId: string,
   newQuantity: number
 ): CartItem[] => {
-  return [];
+  if (newQuantity > 0) {
+    return cart.map((item) =>
+      item.product.id === productId
+        ? {
+            ...item,
+            quantity:
+              item.product.stock < newQuantity
+                ? item.product.stock
+                : newQuantity
+          }
+        : item
+    );
+  } else if (newQuantity === 0) {
+    return cart.filter((item) => item.product.id !== productId);
+  }
 };
