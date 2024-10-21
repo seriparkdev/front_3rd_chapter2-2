@@ -19,14 +19,39 @@ export const getMaxApplicableDiscount = (item: CartItem) => {
   return discount;
 };
 
+const calculateCouponDiscount = (selectedCoupon, total) => {
+  if (selectedCoupon?.discountType === 'amount') {
+    return total - (selectedCoupon?.discountValue ?? 0);
+  } else if (selectedCoupon?.discountType === 'percentage') {
+    console.log(total, selectedCoupon.discountValue / 100);
+    return total - total * (selectedCoupon.discountValue / 100);
+  }
+};
+
 export const calculateCartTotal = (
   cart: CartItem[],
   selectedCoupon: Coupon | null
 ) => {
+  const totalBeforeDiscount = cart.reduce(
+    (price, item) => price + item.product.price * item.quantity,
+    0
+  );
+
+  const appliedDiscountRateTotal = cart.reduce(
+    (price, item) => price + calculateItemTotal(item),
+    0
+  );
+
+  const totalAfterDiscount = selectedCoupon
+    ? calculateCouponDiscount(selectedCoupon, appliedDiscountRateTotal)
+    : appliedDiscountRateTotal;
+
+  const totalDiscount = totalBeforeDiscount - totalAfterDiscount;
+
   return {
-    totalBeforeDiscount: 0,
-    totalAfterDiscount: 0,
-    totalDiscount: 0
+    totalBeforeDiscount: totalBeforeDiscount,
+    totalAfterDiscount: totalAfterDiscount,
+    totalDiscount: totalDiscount
   };
 };
 
