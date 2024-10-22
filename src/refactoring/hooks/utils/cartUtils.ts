@@ -19,12 +19,13 @@ export const getMaxApplicableDiscount = (item: CartItem) => {
   return discount;
 };
 
-const calculateCouponDiscount = (selectedCoupon, total) => {
-  if (selectedCoupon?.discountType === 'amount') {
-    return total - (selectedCoupon?.discountValue ?? 0);
-  } else if (selectedCoupon?.discountType === 'percentage') {
-    console.log(total, selectedCoupon.discountValue / 100);
+const calculateCouponDiscount = (selectedCoupon: Coupon, total: number) => {
+  if (selectedCoupon.discountType === 'amount') {
+    return total - selectedCoupon.discountValue;
+  } else if (selectedCoupon.discountType === 'percentage') {
     return total - total * (selectedCoupon.discountValue / 100);
+  } else {
+    return 0;
   }
 };
 
@@ -49,9 +50,9 @@ export const calculateCartTotal = (
   const totalDiscount = totalBeforeDiscount - totalAfterDiscount;
 
   return {
-    totalBeforeDiscount: totalBeforeDiscount,
-    totalAfterDiscount: totalAfterDiscount,
-    totalDiscount: totalDiscount
+    totalBeforeDiscount,
+    totalAfterDiscount,
+    totalDiscount
   };
 };
 
@@ -72,7 +73,7 @@ export const updateCartItemQuantity = (
           }
         : item
     );
-  } else if (newQuantity === 0) {
+  } else {
     return cart.filter((item) => item.product.id !== productId);
   }
 };
