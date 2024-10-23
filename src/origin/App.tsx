@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { CartPage } from './components/CartPage.tsx';
 import { AdminPage } from './components/AdminPage.tsx';
 import { Coupon, Product } from '../types.ts';
+import { useCoupons, useProducts } from "./hooks";
 
 const initialProducts: Product[] = [
   {
@@ -43,23 +44,9 @@ const initialCoupons: Coupon[] = [
 ];
 
 const App = () => {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
-  const [coupons, setCoupons] = useState<Coupon[]>(initialCoupons);
+  const { products, updateProduct, addProduct } = useProducts(initialProducts);
+  const { coupons, addCoupon } = useCoupons(initialCoupons);
   const [isAdmin, setIsAdmin] = useState(false);
-
-  const handleProductUpdate = (updatedProduct: Product) => {
-    setProducts(prevProducts =>
-      prevProducts.map(p => p.id === updatedProduct.id ? updatedProduct : p)
-    );
-  };
-
-  const handleProductAdd = (newProduct: Product) => {
-    setProducts(prevProducts => [...prevProducts, newProduct]);
-  };
-
-  const handleCouponAdd = (newCoupon: Coupon) => {
-    setCoupons(prevCoupons => [...prevCoupons, newCoupon]);
-  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -79,9 +66,9 @@ const App = () => {
           <AdminPage
             products={products}
             coupons={coupons}
-            onProductUpdate={handleProductUpdate}
-            onProductAdd={handleProductAdd}
-            onCouponAdd={handleCouponAdd}
+            onProductUpdate={updateProduct}
+            onProductAdd={addProduct}
+            onCouponAdd={addCoupon}
           />
         ) : (
           <CartPage products={products} coupons={coupons}/>

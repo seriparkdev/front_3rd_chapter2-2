@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Coupon } from '../../types';
+import { Coupon } from '../../types.ts';
 
 interface Store {
   coupons: Coupon[];
