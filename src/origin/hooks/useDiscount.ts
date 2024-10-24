@@ -1,6 +1,11 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Discount, Product } from '../../types.ts';
 import { useProductStore } from '../stores/useProductStore.ts';
+import {
+  addDiscountToProduct,
+  findProductById,
+  removeDiscountFromProduct
+} from './utils/productUtils.ts';
 
 interface Props {
   editingProduct: Product | null;
@@ -20,12 +25,9 @@ export const useDiscount = ({
   });
 
   const handleAddDiscount = (productId: string) => {
-    const updatedProduct = products.find((p) => p.id === productId);
+    const updatedProduct = findProductById(products, productId);
     if (updatedProduct && editingProduct) {
-      const newProduct = {
-        ...updatedProduct,
-        discounts: [...updatedProduct.discounts, newDiscount]
-      };
+      const newProduct = addDiscountToProduct(updatedProduct, newDiscount);
       updateProduct(newProduct);
       setEditingProduct(newProduct);
       setNewDiscount({ quantity: 0, rate: 0 });
@@ -33,12 +35,9 @@ export const useDiscount = ({
   };
 
   const handleRemoveDiscount = (productId: string, index: number) => {
-    const updatedProduct = products.find((p) => p.id === productId);
+    const updatedProduct = findProductById(products, productId);
     if (updatedProduct) {
-      const newProduct = {
-        ...updatedProduct,
-        discounts: updatedProduct.discounts.filter((_, i) => i !== index)
-      };
+      const newProduct = removeDiscountFromProduct(updatedProduct, index);
       updateProduct(newProduct);
       setEditingProduct(newProduct);
     }

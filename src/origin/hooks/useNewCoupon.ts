@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Coupon } from '../../types.ts';
 
-const COUPON_INITIAL_STATE: Coupon = {
+const couponInitialState: Coupon = {
   name: '',
   code: '',
   discountType: 'percentage',
@@ -9,14 +9,14 @@ const COUPON_INITIAL_STATE: Coupon = {
 };
 
 export const useNewCoupon = () => {
-  const [newCoupon, setNewCoupon] = useState<Coupon>(COUPON_INITIAL_STATE);
+  const [newCoupon, setNewCoupon] = useState<Coupon>(couponInitialState);
 
   const updateNewCoupon = (coupon: Coupon) => {
     setNewCoupon(coupon);
   };
 
   const initNewCoupon = () => {
-    setNewCoupon(COUPON_INITIAL_STATE);
+    setNewCoupon(couponInitialState);
   };
 
   return { newCoupon, updateNewCoupon, initNewCoupon };

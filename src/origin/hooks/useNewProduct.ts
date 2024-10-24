@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Product } from '../../types';
 
-const PRODUCT_INITIAL_STATE: Omit<Product, 'id'> = {
+const productInitialState: Omit<Product, 'id'> = {
   name: '',
   price: 0,
   stock: 0,
@@ -9,16 +9,15 @@ const PRODUCT_INITIAL_STATE: Omit<Product, 'id'> = {
 };
 
 export const useNewProduct = () => {
-  const [newProduct, setNewProduct] = useState<Omit<Product, 'id'>>(
-    PRODUCT_INITIAL_STATE
-  );
+  const [newProduct, setNewProduct] =
+    useState<Omit<Product, 'id'>>(productInitialState);
 
   const updateNewProduct = (product: Omit<Product, 'id'>) => {
     setNewProduct(product);
   };
 
   const initNewProduct = () => {
-    setNewProduct(PRODUCT_INITIAL_STATE);
+    setNewProduct(productInitialState);
   };
 
   return { newProduct, updateNewProduct, initNewProduct };

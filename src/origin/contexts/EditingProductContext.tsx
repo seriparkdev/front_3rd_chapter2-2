@@ -3,11 +3,10 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
-  useContext,
-  useState
+  useContext
 } from 'react';
 import { Product } from '../../types.ts';
-import { useProductStore } from '../stores/useProductStore.ts';
+import { useEditProduct } from '../hooks/useEditProduct.ts';
 
 interface EditingProductContextProps {
   children: ReactNode;
@@ -28,30 +27,13 @@ const EditingProductContext = createContext<EditingProductContextType | null>(
 export const EditingProductProvider = ({
   children
 }: EditingProductContextProps) => {
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-
-  const { updateProduct } = useProductStore();
-
-  // 새로운 핸들러 함수 추가
-  const handleProductNameUpdate = (productId: string, newName: string) => {
-    if (editingProduct && editingProduct.id === productId) {
-      const updatedProduct = { ...editingProduct, name: newName };
-      setEditingProduct(updatedProduct);
-    }
-  };
-
-  // handleEditProduct 함수 수정
-  const handleEditProduct = (product: Product) => {
-    setEditingProduct({ ...product });
-  };
-
-  // 수정 완료 핸들러 함수 추가
-  const handleEditComplete = () => {
-    if (editingProduct) {
-      updateProduct(editingProduct);
-      setEditingProduct(null);
-    }
-  };
+  const {
+    editingProduct,
+    setEditingProduct,
+    handleProductNameUpdate,
+    handleEditProduct,
+    handleEditComplete
+  } = useEditProduct();
 
   const contextValue = {
     editingProduct,
