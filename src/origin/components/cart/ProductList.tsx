@@ -1,5 +1,4 @@
 import { useProductStore } from '../../stores/useProductStore.ts';
-import { CartItem, Product } from '../../../types.ts';
 import {
   getMaxDiscount,
   getRemainingStock

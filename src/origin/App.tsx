@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { CartPage } from './pages/CartPage.tsx';
 import { AdminPage } from './pages/AdminPage.tsx';
+import { EditingProductProvider } from './contexts/EditingProductContext.tsx';
+import { CartProvider } from './contexts/CartContext.tsx';
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -19,7 +21,15 @@ const App = () => {
         </div>
       </nav>
       <main className="container mx-auto mt-6">
-        {isAdmin ? <AdminPage /> : <CartPage />}
+        {isAdmin ? (
+          <EditingProductProvider>
+            <AdminPage />
+          </EditingProductProvider>
+        ) : (
+          <CartProvider>
+            <CartPage />
+          </CartProvider>
+        )}
       </main>
     </div>
   );
