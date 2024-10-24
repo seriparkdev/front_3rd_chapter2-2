@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
-import { useNewProduct } from '../hooks/useNewProduct.ts';
-import { useProductStore } from '../stores/useProductStore.ts';
+import { useNewProduct } from '../../hooks/useNewProduct.ts';
+import { useProductStore } from '../../stores/useProductStore.ts';
 
 export default function NewProductForm() {
   const [showNewProductForm, setShowNewProductForm] = useState(false);

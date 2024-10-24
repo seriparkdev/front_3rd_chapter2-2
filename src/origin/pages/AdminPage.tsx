@@ -1,7 +1,7 @@
-import NewProductForm from '../components/NewProductForm.tsx';
-import ProductList from '../components/ProductList.tsx';
-import NewCouponForm from '../components/NewCouponForm.tsx';
-import CouponList from '../components/CouponList.tsx';
+import NewProductForm from '../components/admin/NewProductForm.tsx';
+import ProductList from '../components/admin/ProductList.tsx';
+import NewCouponForm from '../components/admin/NewCouponForm.tsx';
+import CouponList from '../components/admin/CouponList.tsx';
 
 export const AdminPage = () => {
   return (

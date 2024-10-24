@@ -1,20 +1,21 @@
-import { CartItem, Coupon } from '../../../types.ts';
+import { CartItem, Coupon, Product } from '../../../types.ts';
 
 export const calculateItemTotal = (item: CartItem) => {
-  return (
-    item.product.price * item.quantity * (1 - getMaxApplicableDiscount(item))
-  );
+  return item.product.price * item.quantity * (1 - getApplicableDiscount(item));
 };
 
-export const getMaxApplicableDiscount = (item: CartItem) => {
+export const getMaxDiscount = (
+  discounts: { quantity: number; rate: number }[]
+) => {
+  return discounts.reduce((max, discount) => Math.max(max, discount.rate), 0);
+};
+
+export const getApplicableDiscount = (item: CartItem) => {
   const filteredDiscounts = item.product.discounts.filter(
     (discount) => discount.quantity <= item.quantity
   );
 
-  const discount = filteredDiscounts.reduce(
-    (max, discount) => Math.max(max, discount.rate),
-    0
-  );
+  const discount = getMaxDiscount(filteredDiscounts);
 
   return discount;
 };
@@ -76,4 +77,9 @@ export const updateCartItemQuantity = (
   } else {
     return cart.filter((item) => item.product.id !== productId);
   }
+};
+
+export const getRemainingStock = (cart: CartItem[], product: Product) => {
+  const cartItem = cart.find((item) => item.product.id === product.id);
+  return product.stock - (cartItem?.quantity || 0);
 };

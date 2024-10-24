@@ -1,6 +1,6 @@
-import { Discount, Product } from '../../types.ts';
+import { Discount, Product } from '../../../types.ts';
 import { useState } from 'react';
-import { useProductStore } from '../stores/useProductStore.ts';
+import { useProductStore } from '../../stores/useProductStore.ts';
 
 export default function ProductList() {
   const [openProductIds, setOpenProductIds] = useState<Set<string>>(new Set());

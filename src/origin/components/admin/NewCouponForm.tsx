@@ -1,5 +1,5 @@
-import { useNewCoupon } from '../hooks/useNewCoupon.ts';
-import { useCouponStore } from '../stores/useCouponStore.ts';
+import { useNewCoupon } from '../../hooks/useNewCoupon.ts';
+import { useCouponStore } from '../../stores/useCouponStore.ts';
 
 export default function NewCouponForm() {
   const { addCoupon } = useCouponStore();

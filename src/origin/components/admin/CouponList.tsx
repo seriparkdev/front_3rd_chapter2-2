@@ -1,4 +1,4 @@
-import { useCouponStore } from '../stores/useCouponStore.ts';
+import { useCouponStore } from '../../stores/useCouponStore.ts';
 
 export default function CouponList() {
   const { coupons } = useCouponStore();
